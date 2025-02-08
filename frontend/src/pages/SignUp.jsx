@@ -1,6 +1,20 @@
+import { useState } from "react";
 import { Link } from "react-router";
 
 const SignUp = () => {
+  const { searchParams } = new URL(document.location);
+	const emailValue = searchParams.get("email");
+
+  const [email, setEmail] = useState(emailValue || "");
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+
+  const handleSignUp = (e) => {
+    e.preventDefault();
+    console.log(email, username, password);
+    
+  }
+
   return (
     <div className="h-screen w-full hero-bg">
       <header className="max-w-6xl mx-auto flex items-center justify-between p-4">
@@ -15,7 +29,7 @@ const SignUp = () => {
             Sign Up
           </h1>
 
-          <form className="space-y-4">
+          <form className="space-y-4" onSubmit={handleSignUp}>
             <div>
               <label
                 htmlFor="email"
@@ -28,6 +42,8 @@ const SignUp = () => {
                 className="w-full px-3 py-2 mt-1 border border-gray-700 rounded-md bg-transparent text-white focus:outline-none focus:ring"
                 placeholder="you@example.com"
                 id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
@@ -43,6 +59,8 @@ const SignUp = () => {
                 className="w-full px-3 py-2 mt-1 border border-gray-700 rounded-md bg-transparent text-white focus:outline-none focus:ring"
                 placeholder="johndoe"
                 id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               />
             </div>
 
@@ -58,6 +76,8 @@ const SignUp = () => {
                 className="w-full px-3 py-2 mt-1 border border-gray-700 rounded-md bg-transparent text-white focus:outline-none focus:ring"
                 placeholder="••••••••"
                 id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 

@@ -1,7 +1,8 @@
 import { Route, Routes } from "react-router";
-import HomePage from "./pages/HomePage";
+import HomePage from "./pages/home/HomePage";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
+import Footer from "./components/Footer";
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
 				<Route path='/signup' element={<SignUp />} />
 				
 			</Routes>
+      <Footer />
     </>
   )
 }
