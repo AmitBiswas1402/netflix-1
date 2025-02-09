@@ -122,7 +122,7 @@ export async function logout(req, res) {
   }
 }
 
-export async function authCheck() {
+export async function authCheck(req, res) {
   try {
 		console.log("req.user:", req.user);
 		res.status(200).json({ success: true, user: req.user });
