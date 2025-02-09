@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router";
+import { useAuthStore } from "../store/authUser";
 
 const SignUp = () => {
   const { searchParams } = new URL(document.location);
@@ -9,10 +10,11 @@ const SignUp = () => {
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 
+  const { signup } = useAuthStore();
+
   const handleSignUp = (e) => {
     e.preventDefault();
-    console.log(email, username, password);
-    
+    signup({email, username, password})
   }
 
   return (
@@ -83,7 +85,7 @@ const SignUp = () => {
 
             <button
               className="w-full py-2 bg-red-600 text-white font-semibold rounded-md
-                hover:bg-red-700"
+                hover:bg-red-700 cursor-pointer"
             >
               Sign Up
             </button>
