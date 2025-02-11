@@ -9,10 +9,12 @@ import {
 } from "../../utils/constants";
 import MovieSlider from "../../components/MovieSlider";
 import { useContentStore } from "../../store/content";
+import { useState } from "react";
 
 const HomeScreen = () => {
   const { trendingContent } = useGetTrendingContent();
   const { contentType } = useContentStore();
+  const [imgLoading, setimgLoading] = useState(true)
 
   if (!trendingContent)
     return (
@@ -27,10 +29,17 @@ const HomeScreen = () => {
       <div className="relative h-screen text-white">
         <Navbar />
 
+        {imgLoading && (
+          <div className='absolute top-0 left-0 w-full h-full bg-black/70 flex items-center justify-center shimmer -z-10' />
+        )}
+
         <img
           src={ORIGINAL_IMG_BASE_URL + trendingContent?.backdrop_path}
           alt="img"
           className="absolute top-0 left-0 w-full h-full object-cover -z-50"
+          onLoad={() => {
+            setimgLoading(false);
+          }}
         />
 
         <div
