@@ -12,7 +12,7 @@ import { connectToDB } from "./db/db.js";
 import { protectRoute } from "./middleware/protectRoute.js";
 
 const app = express();
-const PORT = ENV_VARS.PORT;
+const PORT = process.env.PORT || 5000;
 const __dirname = path.resolve();
 
 app.use(express.json());
@@ -31,7 +31,20 @@ if (ENV_VARS.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-  connectToDB();
-});
+const startServer = (port) => {
+  const server = app.listen(port, () => {
+    console.log(`Server is running on http://localhost:${port}`);
+    connectToDB();
+  });
+
+  server.on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+      console.error(`Port ${port} is already in use. Trying another port...`);
+      startServer(port + 1);
+    } else {
+      console.error(err);
+    }
+  });
+};
+
+startServer(PORT);
